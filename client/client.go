@@ -58,6 +58,14 @@ func (c *Client) UploadCaptcha(path string) (string, error) {
 	return captcha_id, nil
 }
 
+func (c *Client) UploadCaptchaByURL(url string) (string, error) {
+	path, err := saveFromUrl(url)
+	if err != nil {
+		return "", err
+	}
+	return c.UploadCaptcha(path)
+}
+
 func (c *Client) GetCaptchaText(id string) (string, error) {
 	url_response := "http://anti-captcha.com/res.php"
 	values := url.Values{}
@@ -106,6 +114,14 @@ func (c *Client) SendAndGet(path string) (string, error) {
 		return "", err
 	}
 	return captcha_text, nil
+}
+
+func (c *Client) SendAndGetByURL(url string) (string, error) {
+	path, err := saveFromUrl(url)
+	if err != nil {
+		return "", err
+	}
+	return c.SendAndGet(path)
 }
 
 func GetClient(key string) *Client {
